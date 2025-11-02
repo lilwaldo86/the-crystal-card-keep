@@ -1,40 +1,110 @@
+import React, { useState } from 'react'
 
-import React, { useEffect, useState } from "react";
+function Card({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <div className="rounded-2xl border bg-white p-5 shadow-sm">
+      <div className="text-lg font-semibold text-gray-900">{title}</div>
+      <div className="text-sm text-gray-600 mt-1">{subtitle}</div>
+    </div>
+  )
+}
 
-// Palette (subtle TCG vibe)
-const CONDITIONS = ["Near Mint", "Lightly Played", "Moderately Played", "Heavily Played", "Damaged"];
-const GAMES = ["Magic: The Gathering", "Pokémon", "One Piece", "Yu-Gi-Oh!"];
+export default function App() {
+  const [tab, setTab] = useState<'home' | 'market' | 'seller' | 'contact'>('home')
 
-const MOCK_LISTINGS = [
-  {
-    id: "1",
-    game: "Magic: The Gathering",
-    name: "Bahamut #0001 (FF x MTG)",
-    set: "Universes Beyond: Final Fantasy",
-    rarity: "Mythic",
-    condition: "Near Mint",
-    graded: true,
-    grader: "PSA",
-    grade: "8",
-    foil: true,
-    price: 899.0,
-    currency: "USD",
-    img: "https://images.unsplash.com/photo-1612544440833-9d56a67c83a9?q=80&w=1400&auto=format&fit=crop",
-  },
-  {
-    id: "2",
-    game: "Pokémon",
-    name: "Charizard Holo (Base Set)",
-    set: "Base Set",
-    rarity: "Holo Rare",
-    condition: "Lightly Played",
-    graded: false,
-    grader: "",
-    grade: "",
-    foil: true,
-    price: 350.0,
-    currency: "USD",
-    img: "https://images.unsplash.com/photo-1603575449299-f3e006b75e0a?q=80&w=1400&auto=format&fit=crop",
+  return (
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
+          <div className="font-extrabold text-xl tracking-tight text-gray-900">
+            The Crystal Card Keep
+          </div>
+          <nav className="flex items-center gap-2 text-sm">
+            <button onClick={() => setTab('home')} className={`px-3 py-1.5 rounded ${tab==='home'?'bg-gray-900 text-white':'hover:bg-gray-100'}`}>Home</button>
+            <button onClick={() => setTab('market')} className={`px-3 py-1.5 rounded ${tab==='market'?'bg-gray-900 text-white':'hover:bg-gray-100'}`}>Marketplace</button>
+            <button onClick={() => setTab('seller')} className={`px-3 py-1.5 rounded ${tab==='seller'?'bg-gray-900 text-white':'hover:bg-gray-100'}`}>Seller</button>
+            <button onClick={() => setTab('contact')} className={`px-3 py-1.5 rounded ${tab==='contact'?'bg-gray-900 text-white':'hover:bg-gray-100'}`}>Contact</button>
+          </nav>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+        {tab === 'home' && (
+          <>
+            <div className="rounded-3xl border bg-gradient-to-br from-indigo-50 via-white to-emerald-50 p-8">
+              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                Low Fees. Reliable Escrow. Built for Collectors.
+              </h1>
+              <p className="mt-2 text-gray-700 max-w-2xl">
+                A clean, modern marketplace for trading cards and collectibles. Transparent pricing and seller-first features.
+              </p>
+              <div className="mt-5">
+                <button onClick={() => setTab('market')} className="px-5 py-2.5 rounded-xl bg-gray-900 text-white">
+                  Enter Marketplace
+                </button>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              <Card title="Low Seller Fees" subtitle="Flat 5% base. Tiered instant payout optional." />
+              <Card title="Escrow & Tracking" subtitle="5-day hold or buyer confirmation before release." />
+              <Card title="Multi-TCG Friendly" subtitle="MTG, Pokémon, One Piece, Yu-Gi-Oh! and more." />
+            </div>
+          </>
+        )}
+
+        {tab === 'market' && (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900">Explore Listings</h2>
+            <div className="rounded-2xl border bg-white p-6 text-sm text-gray-600">
+              Marketplace UI goes here (listings grid, filters, cart, offers). We’ll wire this after deploy.
+            </div>
+          </div>
+        )}
+
+        {tab === 'seller' && (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900">Seller Dashboard</h2>
+            <div className="rounded-2xl border bg-white p-6 text-sm text-gray-600">
+              Profit bars, escrow timeline, instant payout tiers—coming next.
+            </div>
+          </div>
+        )}
+
+        {tab === 'contact' && (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900">Contact</h2>
+            <form className="grid md:grid-cols-2 gap-4 text-sm" onSubmit={(e)=>e.preventDefault()}>
+              <label className="block">
+                <span className="text-gray-700">Name</span>
+                <input className="w-full mt-1 rounded-xl border px-3 py-2" placeholder="Your name"/>
+              </label>
+              <label className="block">
+                <span className="text-gray-700">Email</span>
+                <input className="w-full mt-1 rounded-xl border px-3 py-2" placeholder="you@example.com"/>
+              </label>
+              <label className="block md:col-span-2">
+                <span className="text-gray-700">Message</span>
+                <textarea className="w-full mt-1 rounded-xl border px-3 py-2" rows={5} placeholder="How can we help?"/>
+              </label>
+              <div className="md:col-span-2 flex justify-end">
+                <button type="submit" className="px-4 py-2 rounded-xl bg-gray-900 text-white">Send</button>
+              </div>
+            </form>
+          </div>
+        )}
+      </main>
+
+      <footer className="border-t bg-white">
+        <div className="max-w-6xl mx-auto px-4 py-6 text-sm text-gray-600 flex flex-col md:flex-row items-center gap-2 md:gap-6">
+          <div>© {new Date().getFullYear()} The Crystal Card Keep</div>
+          <div className="h-1 w-1 rounded-full bg-gray-400 hidden md:block" />
+          <div>Escrow · Tracked Shipping · Dispute Resolution</div>
+        </div>
+      </footer>
+    </div>
+  )
+}    img: "https://images.unsplash.com/photo-1603575449299-f3e006b75e0a?q=80&w=1400&auto=format&fit=crop",
   },
 ];
 
