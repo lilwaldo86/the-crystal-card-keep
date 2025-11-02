@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* optional helper if you need it later */
+/* optional helper */
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
