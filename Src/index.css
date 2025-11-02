@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* simple utility for line clamp in case the environment lacks the plugin */
+/* optional helper if you need it later */
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
